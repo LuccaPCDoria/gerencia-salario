@@ -2,106 +2,117 @@
 
 body {
     margin: 0;
-    font-family: "Segoe UI", sans-serif;
-    background-color: #f1fdf5;
+    padding: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to bottom right, #f0fdf4, #eff6ff);
 }
 
 .login-container {
+    min-height: 100vh;
     display: flex;
-    height: 100vh;
-    align-items: center;
     justify-content: center;
-    padding: 20px;
-    background-color: #f1fdf5;
+    align-items: center;
+    padding: 1rem;
 }
 
 .login-box {
-    background-color: white;
-    padding: 2.5rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-    width: 100%;
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
     max-width: 400px;
-    text-align: center;
+    width: 100%;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 .login-icon {
-    background-color: #22c55e;
+    background: #16a34a;
     color: white;
     font-size: 1.5rem;
-    width: 3rem;
-    height: 3rem;
+    width: 4rem;
+    height: 4rem;
     border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
+    display: flex;
     justify-content: center;
-    margin-bottom: 1.5rem;
+    align-items: center;
+    margin: 0 auto 0.5rem auto;
 }
 
 .login-box h2 {
-    font-size: 1.5rem;
+    text-align: center;
+    font-size: 1.75rem;
+    font-weight: 700;
     margin: 0;
+    color: #111827;
 }
 
 .login-box p {
-    margin: 0.5rem 0 1.5rem;
-    color: #555;
+    text-align: center;
+    margin-top: -0.5rem;
+    margin-bottom: 1rem;
     font-size: 0.95rem;
+    color: #6b7280;
 }
 
 .login-box label {
-    display: block;
-    margin-bottom: 0.25rem;
-    text-align: left;
     font-size: 0.9rem;
-    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.25rem;
 }
 
 .login-box input {
-    width: 100%;
-    padding: 10px 12px;
-    margin-bottom: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 1rem;
-    transition: border-color 0.3s;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    outline: none;
+    font-size: 0.95rem;
+    transition: 0.2s ease;
 }
 
 .login-box input:focus {
-    border-color: #22c55e;
-    outline: none;
+    border-color: #16a34a;
+    box-shadow: 0 0 0 2px #bbf7d0;
 }
 
 .login-box button {
-    background-color: #22c55e;
+    background: #16a34a;
     color: white;
+    padding: 0.6rem;
     border: none;
-    width: 100%;
-    padding: 10px;
-    border-radius: 6px;
-    font-size: 1rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background 0.3s ease;
 }
 
 .login-box button:hover {
-    background-color: #16a34a;
+    background: #15803d;
 }
 
 .link-text {
-    margin-top: 1rem;
+    text-align: center;
     font-size: 0.85rem;
-    color: #444;
+    color: #4b5563;
 }
 
 .link-text a {
-    color: #22c55e;
+    color: #16a34a;
     font-weight: 500;
     text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.link-text a:hover {
+    color: #15803d;
 }
 
 .error-msg {
+    text-align: center;
+    font-size: 0.85rem;
     color: #dc2626;
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
+    background: #fef2f2;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
 }

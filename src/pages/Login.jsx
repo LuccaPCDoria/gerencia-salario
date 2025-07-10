@@ -1,37 +1,47 @@
 import { useState } from "react";
 import { supabase } from "../services/supabase";
 import { useNavigate } from "react-router-dom";
-import "../styles/login.css"; // <- Importa o CSS puro
+import "../styles/login.css";
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [erro, setErro] = useState(null);
+    const [isSignUp, setIsSignUp] = useState(false);
     const navigate = useNavigate();
 
-    const handleLogin = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setErro(null);
 
-        const { error } = await supabase.auth.signInWithPassword({
-            email,
-            password: senha,
-        });
-
-        if (error) {
-            setErro("Email ou senha inválidos.");
+        if (isSignUp) {
+            const { error } = await supabase.auth.signUp({
+                email,
+                password: senha,
+            });
+            if (error) setErro("Erro ao criar conta.");
+            else alert("Conta criada! Verifique seu email.");
         } else {
-            navigate("/dashboard");
+            const { error } = await supabase.auth.signInWithPassword({
+                email,
+                password: senha,
+            });
+            if (error) setErro("Email ou senha inválidos.");
+            else navigate("/dashboard");
         }
     };
 
     return (
         <div className="login-container">
-            <form className="login-box" onSubmit={handleLogin}>
+            <form className="login-box" onSubmit={handleSubmit}>
                 <div className="login-icon">$</div>
 
-                <h2>Fazer login</h2>
-                <p>Acesse seu gerenciador de salários</p>
+                <h2>{isSignUp ? "Criar conta" : "Fazer login"}</h2>
+                <p>
+                    {isSignUp
+                        ? "Gerencie seus salários de forma simples"
+                        : "Acesse seu gerenciador de salários"}
+                </p>
 
                 <label>Email</label>
                 <input
@@ -53,10 +63,15 @@ export default function Login() {
 
                 {erro && <p className="error-msg">{erro}</p>}
 
-                <button type="submit">Entrar</button>
+                <button type="submit">
+                    {isSignUp ? "Criar conta" : "Entrar"}
+                </button>
 
                 <p className="link-text">
-                    Não tem conta? <a href="#">Cadastre-se</a>
+                    {isSignUp ? "Já tem uma conta?" : "Não tem conta?"}
+                    <a href="#" onClick={() => setIsSignUp(!isSignUp)}>
+                        {isSignUp ? " Faça login" : " Cadastre-se"}
+                    </a>
                 </p>
             </form>
         </div>
