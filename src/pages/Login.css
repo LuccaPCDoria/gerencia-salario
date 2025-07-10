@@ -1,0 +1,114 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to bottom right, #e0f7ec, #f0fcf6);
+    font-family: sans-serif;
+}
+
+.auth-card {
+    padding: 40px;
+
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+.auth-icon {
+    background-color: #16a34a;
+    color: white;
+    width: 60px;
+    height: 60px;
+    font-size: 32px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+p {
+    margin-bottom: 24px;
+    color: #555;
+    font-size: 14px;
+}
+
+label {
+    display: block;
+    text-align: left;
+    font-weight: 500;
+    margin-top: 12px;
+    margin-bottom: 4px;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.input-group input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+}
+
+.input-group .icon {
+    padding: 8px 12px;
+    font-size: 16px;
+    color: #888;
+    background-color: #f4f4f4;
+    align-content: center;
+}
+
+.input-group .toggle {
+    cursor: pointer;
+}
+.icon.toggle > svg {
+    margin-top: 0px;
+}
+.btn {
+    background-color: #16a34a;
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 16px;
+    margin-top: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn:hover {
+    background-color: #15803d;
+}
+
+.toggle-text {
+    margin-top: 16px;
+    font-size: 14px;
+}
+
+.toggle-text span {
+    color: #16a34a;
+    cursor: pointer;
+    font-weight: 600;
+}
