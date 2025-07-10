@@ -1,48 +1,44 @@
 import { useState } from "react";
 import { supabase } from "../services/supabase";
-import { useNavigate } from "react-router-dom";
 import "../styles/login.css";
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
-    const [erro, setErro] = useState(null);
-    const [modoCadastro, setModoCadastro] = useState(false); // false = login, true = cadastro
-    const navigate = useNavigate();
+    const [mostrarSenha, setMostrarSenha] = useState(false);
+    const [modoCadastro, setModoCadastro] = useState(false);
+    const [erro, setErro] = useState("");
+
+    const alternarModo = () => {
+        setModoCadastro(!modoCadastro);
+        setErro("");
+        setEmail("");
+        setSenha("");
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setErro(null);
+        setErro("");
 
         if (modoCadastro) {
-            // Criar conta
             const { error } = await supabase.auth.signUp({
                 email,
                 password: senha,
             });
-            if (error) {
-                setErro("Erro ao criar conta. Tente novamente.");
-            } else {
-                setModoCadastro(false); // volta para login
-            }
+            if (error) setErro("Erro ao criar conta. Verifique os dados.");
         } else {
-            // Fazer login
             const { error } = await supabase.auth.signInWithPassword({
                 email,
                 password: senha,
             });
-            if (error) {
-                setErro("Email ou senha inválidos.");
-            } else {
-                navigate("/dashboard");
-            }
+            if (error) setErro("Email ou senha inválidos.");
         }
     };
 
     return (
-        <div className="login-container">
-            <form className="login-box" onSubmit={handleSubmit}>
-                <div className="login-icon">$</div>
+        <div className="pagina">
+            <form className="formulario" onSubmit={handleSubmit}>
+                <div className="icone-login">$</div>
                 <h2>{modoCadastro ? "Criar conta" : "Fazer login"}</h2>
                 <p>
                     {modoCadastro
@@ -51,43 +47,52 @@ export default function Login() {
                 </p>
 
                 <label>Email</label>
-                <input
-                    type="email"
-                    placeholder="seu@email.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
+                <div className="input-wrapper">
+                    <span className="icone-email">📧</span>
+                    <input
+                        type="email"
+                        placeholder="seu@email.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </div>
 
                 <label>Senha</label>
-                <input
-                    type="password"
-                    placeholder="••••••••"
-                    value={senha}
-                    onChange={(e) => setSenha(e.target.value)}
-                    required
-                />
+                <div className="input-wrapper">
+                    <span className="icone-senha">🔒</span>
+                    <input
+                        type={mostrarSenha ? "text" : "password"}
+                        placeholder="********"
+                        value={senha}
+                        onChange={(e) => setSenha(e.target.value)}
+                        required
+                    />
+                    <span
+                        className="icone-toggle"
+                        onClick={() => setMostrarSenha(!mostrarSenha)}
+                        style={{ cursor: "pointer" }}
+                    >
+                        👁️
+                    </span>
+                </div>
 
-                {erro && <p className="error-msg">{erro}</p>}
+                {erro && <p className="erro">{erro}</p>}
 
                 <button type="submit">
                     {modoCadastro ? "Criar conta" : "Entrar"}
                 </button>
 
-                <p className="link-text">
+                <p className="alternar">
                     {modoCadastro ? (
                         <>
                             Já tem uma conta?{" "}
-                            <a href="#" onClick={() => setModoCadastro(false)}>
-                                Faça login
-                            </a>
+                            <span onClick={alternarModo}>Faça login</span>
                         </>
                     ) : (
                         <>
                             Não tem conta?{" "}
-                            <a href="#" onClick={() => setModoCadastro(true)}>
-                                Cadastre-se
-                            </a>
+                            <span onClick={alternarModo}>Cadastre-se</span>
                         </>
                     )}
                 </p>
