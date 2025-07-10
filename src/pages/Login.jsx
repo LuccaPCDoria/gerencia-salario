@@ -7,27 +7,35 @@ export default function Login() {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [erro, setErro] = useState(null);
-    const [isSignUp, setIsSignUp] = useState(false);
+    const [modoCadastro, setModoCadastro] = useState(false); // false = login, true = cadastro
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErro(null);
 
-        if (isSignUp) {
+        if (modoCadastro) {
+            // Criar conta
             const { error } = await supabase.auth.signUp({
                 email,
                 password: senha,
             });
-            if (error) setErro("Erro ao criar conta.");
-            else alert("Conta criada! Verifique seu email.");
+            if (error) {
+                setErro("Erro ao criar conta. Tente novamente.");
+            } else {
+                setModoCadastro(false); // volta para login
+            }
         } else {
+            // Fazer login
             const { error } = await supabase.auth.signInWithPassword({
                 email,
                 password: senha,
             });
-            if (error) setErro("Email ou senha inválidos.");
-            else navigate("/dashboard");
+            if (error) {
+                setErro("Email ou senha inválidos.");
+            } else {
+                navigate("/dashboard");
+            }
         }
     };
 
@@ -35,10 +43,9 @@ export default function Login() {
         <div className="login-container">
             <form className="login-box" onSubmit={handleSubmit}>
                 <div className="login-icon">$</div>
-
-                <h2>{isSignUp ? "Criar conta" : "Fazer login"}</h2>
+                <h2>{modoCadastro ? "Criar conta" : "Fazer login"}</h2>
                 <p>
-                    {isSignUp
+                    {modoCadastro
                         ? "Gerencie seus salários de forma simples"
                         : "Acesse seu gerenciador de salários"}
                 </p>
@@ -46,7 +53,7 @@ export default function Login() {
                 <label>Email</label>
                 <input
                     type="email"
-                    placeholder="Digite seu email"
+                    placeholder="seu@email.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -55,7 +62,7 @@ export default function Login() {
                 <label>Senha</label>
                 <input
                     type="password"
-                    placeholder="Digite sua senha"
+                    placeholder="••••••••"
                     value={senha}
                     onChange={(e) => setSenha(e.target.value)}
                     required
@@ -64,14 +71,25 @@ export default function Login() {
                 {erro && <p className="error-msg">{erro}</p>}
 
                 <button type="submit">
-                    {isSignUp ? "Criar conta" : "Entrar"}
+                    {modoCadastro ? "Criar conta" : "Entrar"}
                 </button>
 
                 <p className="link-text">
-                    {isSignUp ? "Já tem uma conta?" : "Não tem conta?"}
-                    <a href="#" onClick={() => setIsSignUp(!isSignUp)}>
-                        {isSignUp ? " Faça login" : " Cadastre-se"}
-                    </a>
+                    {modoCadastro ? (
+                        <>
+                            Já tem uma conta?{" "}
+                            <a href="#" onClick={() => setModoCadastro(false)}>
+                                Faça login
+                            </a>
+                        </>
+                    ) : (
+                        <>
+                            Não tem conta?{" "}
+                            <a href="#" onClick={() => setModoCadastro(true)}>
+                                Cadastre-se
+                            </a>
+                        </>
+                    )}
                 </p>
             </form>
         </div>
