@@ -31,7 +31,7 @@ export default function Login() {
                         />
                     </div>
 
-                    <label>Senha</label>
+                    <label>Senhaaa</label>
                     <div className="input-group">
                         <span className="icon">🔒</span>
                         <input
